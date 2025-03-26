@@ -78,6 +78,18 @@ This is the place for you to write reflections:
 
 #### Reflection Publisher-1
 
+1. **Do we need an interface/trait for Subscriber, or is a single model struct enough?**  
+   In the classic Observer pattern, the Observer is defined as an interface so that different concrete observers can implement custom notification behavior. In BambangShop’s case, our “subscriber” is merely a record containing an ID and callback URL there is no polymorphic behavior or multiple subscriber types requiring different implementations. Therefore a single Rust struct is sufficient; we don’t gain extra flexibility by defining a trait here.
+
+
+2. **Is using a Vec sufficient for storing subscribers, or is a DashMap (hash map) necessary?**  
+   Because each subscriber’s ID (and URL) must be unique, a map keyed by ID naturally enforces uniqueness and provides O(1) lookup, addition, and removal. A Vec would require linear searches to detect duplicates or delete entries, which grows inefficient as the subscriber list scales. Thus DashMap (or any map) is more appropriate for both correctness and performance.
+
+
+3. **Do we still need DashMap for thread safety, or could we implement a Singleton instead?**  
+   A Singleton only ensures a single instance of a repository, not thread-safe concurrent access. Since HTTP handlers run concurrently and may mutate the subscriber list simultaneously, thread safety is essential. DashMap provides built‑in concurrent locking per bucket, so it’s both simpler and safer than building a custom synchronization wrapper around a Singleton.
+
+   
 #### Reflection Publisher-2
 
 #### Reflection Publisher-3
