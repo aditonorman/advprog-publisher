@@ -110,3 +110,20 @@ This is the place for you to write reflections:
    These capabilities accelerate iterative development and collaboration for our group project and any future web services.
 
 #### Reflection Publisher-3
+
+1. **Which Observer variation do we use?**  
+   We use the **Push model**, where the publisher actively sends (pushes) notification payloads to each subscriber’s callback URL whenever an event (create, delete, or promote) occurs.
+
+
+2. **Advantages and disadvantages of using the Pull model instead?**
+    - **Advantages of Pull:**
+        - Subscribers control when and how often they retrieve updates, reducing unwanted network traffic.
+        - The publisher doesn’t need to manage failed deliveries or retries—subscribers simply request the latest state when ready.
+    - **Disadvantages of Pull:**
+        - Increased latency: subscribers may miss timely updates unless they poll frequently.
+        - Higher complexity on the subscriber side to implement polling logic and state tracking.
+        - Potential inefficiency: frequent polling wastes resources if no new events occur.
+
+
+3. **What happens if we don’t use multi‑threading for notifications?**  
+   Without concurrency, each HTTP POST to a subscriber would block the main thread until completion. Slow or unresponsive subscriber endpoints could dramatically delay or block processing of subsequent requests (product creation, deletion, or promotion), degrading overall throughput and responsiveness of the app.
