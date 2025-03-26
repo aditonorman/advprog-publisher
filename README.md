@@ -92,4 +92,21 @@ This is the place for you to write reflections:
    
 #### Reflection Publisher-2
 
+1. **Why separate Service and Repository from Model?**  
+   Following the Single Responsibility Principle, the Repository layer is responsible solely for data persistence (CRUD operations), while the Service layer encapsulates business logic and orchestrates interactions between repositories and other components (e.g., validation, notification triggering). Keeping these concerns separate improves maintainability, testability, and allows swapping or mocking layers independently during testing.
+
+
+2. **What if we only use the Model? How would interactions affect code complexity?**  
+   If Models handled persistence, validation, and business rules all in one, each struct (Program, Subscriber, Notification) would become bloated with mixed responsibilities. For example, subscribing a user would require the Subscriber model to both validate input, update storage, and manage notification logic. As the application grows, tangled code paths and duplicated logic across models would drastically increase complexity and make it difficult to isolate bugs or add new features.
+
+
+3. **How Postman helps testing and which features are useful?**  
+   Postman streamlines API testing by allowing me to construct and send HTTP requests without writing client code. Key features I find valuable include:
+    - **Collections & Environments:** Organize related requests and switch between configurations (e.g., development vs production).
+    - **Pre-request scripts & Tests:** Automate setup (auth tokens) and assert response correctness.
+    - **Variables & Parameterization:** Easily reuse dynamic values across requests.
+    - **Documentation Generation:** Share clear API docs with teammates.
+
+   These capabilities accelerate iterative development and collaboration for our group project and any future web services.
+
 #### Reflection Publisher-3
